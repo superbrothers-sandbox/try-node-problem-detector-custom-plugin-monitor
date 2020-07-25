@@ -1,0 +1,34 @@
+{
+  "plugin": "custom",
+  "pluginConfig": {
+    "invoke_interval": "30s",
+    "timeout": "5s",
+    "max_output_length": 80,
+    "concurrency": 3,
+    "enable_message_change_based_condition_update": false
+  },
+  "source": "upfile-monitor",
+  "metricsReporting": true,
+  "conditions": [
+    {
+      "type": "UpFile",
+      "reason": "UpFileExists",
+      "message": "up file exists"
+    }
+  ],
+  "rules": [
+    {
+      "type": "temporary",
+      "reason": "UPFileDoesNotExist",
+      "path": "/custom-config/plugin/check_up_file.sh",
+      "timeout": "3s"
+    },
+    {
+      "type": "permanent",
+      "condition": "UpFile",
+      "reason": "UpFileDoesNotExist",
+      "path": "/custom-config/plugin/check_up_file.sh",
+      "timeout": "3s"
+    }
+  ]
+}
